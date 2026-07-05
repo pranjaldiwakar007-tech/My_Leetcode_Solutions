@@ -1,0 +1,24 @@
+class Solution {
+public:
+    int f(int ind,int buy,vector<int>& prices,int n, int cap, vector<vector<vector<int>>> &dp)
+    {
+        int profit=0;
+        if(ind==n || cap==0) return 0;
+        if(dp[ind][buy][cap]!=-1) return dp[ind][buy][cap];
+        if(buy)
+        profit=max(-prices[ind]+f(ind+1,0,prices,n,cap,dp),
+        f(ind+1,1,prices,n,cap,dp));
+        else
+        profit=max(prices[ind]+f(ind+1,1,prices,n,cap-1,dp),
+        f(ind+1,0,prices,n,cap,dp));
+        return dp[ind][buy][cap]=profit;
+    }
+     
+    int maxProfit(vector<int>& prices) {
+        int n=prices.size();
+        vector<vector<vector<int>>> dp(n,vector<vector<int>>(2,vector<int>(3,-1)));
+        int cap=2;
+        return f(0,1,prices,n,cap,dp);
+        
+    }
+};
