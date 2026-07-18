@@ -1,15 +1,20 @@
 class Solution {
-public:
+public:        
     int numSubarraysWithSum(vector<int>& nums, int goal) {
-        map<int,int>mpp;
+        int l=0,r=0;
         int sum=0,cnt=0;
-        mpp[0]=1;
-        for(auto &x:nums){
-            sum+=x;
-            if(mpp.find(sum-goal)!=mpp.end()){
-                cnt+=mpp[sum-goal];
+        int cntz=0;
+        for(;r<nums.size();r++){
+            sum+=nums[r];
+            while(l<r && (nums[l]==0 ||sum>goal)){
+                if(nums[l]==0) cntz++;
+                else cntz=0;
+                sum-=nums[l];
+                l++;
             }
-            mpp[sum]++;
+            if(sum==goal)
+            cnt+=1+cntz;
+
         }
         return cnt;
     }
