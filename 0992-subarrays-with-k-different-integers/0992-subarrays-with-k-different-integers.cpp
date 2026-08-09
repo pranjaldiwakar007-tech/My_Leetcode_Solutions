@@ -1,22 +1,22 @@
 class Solution {
 public:
-    int solve(vector<int>& nums, int k){
-        int l=0,r=0;
-        int cnt=0;
-        int n=nums.size();
+    int subarraysWithKDistinct(vector<int>& nums, int k) {
+        int l=0,r=0,l_bada=0,n=nums.size(),ans=0;
         unordered_map<int,int>mpp;
         for(;r<n;r++){
             mpp[nums[r]]++;
-            while(mpp.size()>k){
+            if(mpp.size()>k){
                 mpp[nums[l]]--;
                 if(mpp[nums[l]]==0) mpp.erase(nums[l]);
                 l++;
+                l_bada=l;
             }
-            if(mpp.size()<=k) cnt+=r-l+1;
+            while(mpp[nums[l]]>1){
+                mpp[nums[l]]--;
+                l++;
+            }
+            if(mpp.size()==k) ans+=1+l-l_bada;
         }
-        return cnt;
-    }
-    int subarraysWithKDistinct(vector<int>& nums, int k) {
-        return solve(nums,k)-solve(nums,k-1);
+        return ans;
     }
 };
