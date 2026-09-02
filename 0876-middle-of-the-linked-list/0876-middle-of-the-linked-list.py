@@ -18,9 +18,9 @@ class Solution:
             cnt+=1
             if cnt==n:
                 prev.next=None
-                # head=temp
+                head=temp
                 break
             prev=temp
             temp=temp.next
-        return temp
+        return head
         
